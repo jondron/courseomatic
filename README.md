@@ -12,6 +12,7 @@ Course-omatic is a design tool for creating course designs.
       underlying principles of good course design that all assessments
       should also be learning activities, so that's where you will find
       the means to manage them. 
+      
 It is designed to support a learning design process derived from ABC-LD (ABC
         Learning Design), adapted to the needs of self-paced online
       learning. ABC-LD is an agile approach to building courses that has
@@ -22,6 +23,7 @@ It is designed to support a learning design process derived from ABC-LD (ABC
       Miro, and it provides a lot more scaffolding and support for
       creating diagrams and the kind of information needed when writing
       a course.
+
 This is a performance support system that is best used with
       friends! In order to make it possible to share this on any site,
       including in a learning management system, it does not need a
