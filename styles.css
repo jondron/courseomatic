@@ -1,0 +1,241 @@
+body {
+    font-family: Arial, sans-serif;
+}
+
+/* Sticky header */
+#static-header {
+    position: sticky;
+    top: 0;
+    background-color: #f0f0f0;
+    z-index: 10; /* Ensure it stays on top of other content */
+    padding: 10px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
+
+/* Scrollable content area */
+#scrollable-content {
+    overflow-y: visible;
+    flex-grow: 1; /* Allow this section to grow and fill the space */
+    padding: 20px;
+}
+
+#total-course-duration {
+    margin-bottom: 20px;
+}
+
+
+.activities-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    background-color: grey;
+    padding: 10px;
+}
+
+.activity-card {
+    background-color: grey;
+    width: 320px;
+    height: 350px;
+    padding: 10px;
+    position: relative;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.3);
+    
+}
+
+.activity-card .title {
+    font-weight: bold;
+}
+
+.activity-card .buttons {
+    position: absolute;
+    bottom: 10px;
+    right: 10px;
+}
+
+.popup {
+    display: none;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: white;
+    padding: 20px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+    z-index: 1000;
+}
+
+.popup.active {
+    display: block;
+}
+
+.activity-placeholder {
+    border: 1px dashed #ccc;
+    width: 270px;
+    height: 150px;
+}
+
+
+#main-container {
+    width: 90%;
+    margin: 0 auto;
+}
+
+#header {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+
+
+
+#toolbar {
+    margin-bottom: 20px;
+}
+
+#course-container {
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+}
+
+.unit-panel {
+    width: 100%;
+    /* max-width: 800px;*/
+    background-color: lightgrey;
+    padding: 20px;
+    margin-bottom: 20px;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+#course-details-display {
+    width: 100%;
+    /* max-width: 800px;*/
+    background-color: white;
+    padding: 20px;
+    margin-bottom: 20px;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.outcomes {
+    font-size: 12px;
+    color: darkblue;
+}
+
+#popup {
+    display: none;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: white;
+    border: 1px solid #ccc;
+    padding: 20px;
+    z-index: 1000;
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.3);
+}
+
+#popup.active {
+    display: block;
+}
+
+.unit-panel {
+    background-color: lightgrey;
+    margin-bottom: 20px;
+    padding: 20px;
+    border-radius: 8px;
+    position: relative;
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.3);
+
+}
+
+.unit-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: relative;
+}
+
+.unit-buttons {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+}
+
+.unit-buttons button {
+    border: none;
+    background: none;
+    cursor: pointer;
+    margin-left: 5px;
+    font-size: 18px;
+}
+
+.unit-buttons button:hover {
+    opacity: 0.7;
+}
+
+button {
+    margin-right: 5px;
+    cursor: pointer;
+}
+
+#course-name-display {
+    font-size: 1.5em;
+    margin-bottom: 10px;
+}
+
+#learning-outcomes-display {
+    margin-bottom: 20px;
+}
+
+#course-learning-outcomes {
+    padding: 10px;
+    margin-bottom: 20px;
+}
+
+#learning-outcomes-list {
+    list-style-type: numbered; /* Remove default list styling */
+    padding: 0;
+    margin: 10;
+    display: flex; /* Use flexbox to arrange items horizontally */
+    flex-wrap: wrap; /* Wrap to next line if needed */
+}
+
+#learning-outcomes-list li {
+    margin-right: 15px; /* Space between list items */
+    padding: 5px 15px;
+    margin-right: 15px;
+    background-color: #f9f9f9; /* Optional: add background color */
+    border-radius: 5px; /* Optional: rounded corners */
+}
+
+.assess-list {
+    list-style-type: numbered; /* Remove default list styling */
+    padding: 0;
+    margin: 10;
+    display: flex; /* Use flexbox to arrange items horizontally */
+    flex-wrap: wrap; /* Wrap to next line if needed */
+}
+
+.assess-list li {
+    margin-right: 15px; /* Space between list items */
+    padding: 5px 15px;
+    margin-right: 15px;
+    background-color: #f9f9f9; /* Optional: add background color */
+    border-radius: 5px; /* Optional: rounded corners */
+}
+
+
+.activity-card .star {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    color: red;
+    font-size: 20px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    
+}

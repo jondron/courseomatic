@@ -1,0 +1,67 @@
+	<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Course-omatic</title>
+    <link rel="stylesheet" href="styles.css">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.3.1/jspdf.umd.min.js"></script>
+    <link href="https://cdn.quilljs.com/1.3.6/quill.snow.css" rel="stylesheet">
+	<script src="https://cdn.quilljs.com/1.3.6/quill.js"></script>
+	<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+	<script src="https://d3js.org/d3.v6.min.js"></script>
+    <script src="script.js" defer></script>
+</head>
+<body>
+<div id="static-header">
+     <h2 id="course-name-display">Course-omatic</h2>
+
+		 <div id="main-container">
+			<div id="header">
+				<button id="edit-course-info">Edit Course Info</button>
+				<button id="create-new-unit">Create New Unit</button>
+				<select id="learning-activity-menu">
+					<option value="">Add Learning Activity</option>
+					<option value="acquisition">Acquisition</option>
+					<option value="practice">Practice</option>
+					<option value="investigation">Investigation</option>
+					<option value="reflection">Reflection</option>
+					<option value="production">Production</option>
+					<option value="discussion">Discussion</option>
+					<option value="cooperation">Cooperation</option>
+					<option value="collaboration">Collaboration</option>
+					<option value="other">Other</option>
+				</select>
+				<button id="save-load-menu">Save/Load Menu</button>
+				<button id="clear-course-data">Clear course</button>
+				<a href = "help.html" target="help">Getting started </a>
+				<a href="studyhoursestimator.html" target="_blank" style="position:absolute;right:16px">Help estimating study hours</a>
+			</div>
+
+			<div id="color-key-container"></div>
+  		</div>
+</div>
+ 
+ <!-- Scrollable Content Section -->
+ 
+ 	<div id="scrollable-content">
+	   <div id="course-details-display"">
+			<div id="total-course-duration" style="font-size: 16px; font-weight: bold;">Total Course Duration: 0h 0m</div>
+			<div id="learning-outcomes-display"></div>
+			<div id="pie-chart">
+				<p>Relative time spent per activity type:</p>
+				<canvas id="activityPieChart" width="100" height="100"></canvas>
+			</div>
+		</div>
+		<div id="course-container"></div>
+
+		<div id="popup" class="popup"></div>
+	
+	</div>
+ 
+   <p xmlns:cc="http://creativecommons.org/ns#" xmlns:dct="http://purl.org/dc/terms/"><span property="dct:title">course-omatic</span> by <a rel="cc:attributionURL dct:creator" property="cc:attributionName" href="https://jondron.ca">Jon Dron</a> is licensed under <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/?ref=chooser-v1" target="_blank" rel="license noopener noreferrer" style="display:inline-block;">CC BY-NC-SA 4.0<img style="height:22px!important;margin-left:3px;vertical-align:text-bottom;" src="https://mirrors.creativecommons.org/presskit/icons/cc.svg?ref=chooser-v1" alt=""><img style="height:22px!important;margin-left:3px;vertical-align:text-bottom;" src="https://mirrors.creativecommons.org/presskit/icons/by.svg?ref=chooser-v1" alt=""><img style="height:22px!important;margin-left:3px;vertical-align:text-bottom;" src="https://mirrors.creativecommons.org/presskit/icons/nc.svg?ref=chooser-v1" alt=""><img style="height:22px!important;margin-left:3px;vertical-align:text-bottom;" src="https://mirrors.creativecommons.org/presskit/icons/sa.svg?ref=chooser-v1" alt=""></a></p> 
+ 
+</body>
+</html>

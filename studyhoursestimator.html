@@ -1,0 +1,587 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Course Workload Estimator</title>
+    <style>
+        body {
+            max-width: 960px;
+            margin: auto;
+            font-family: Arial, sans-serif;
+        }
+        .section {
+            margin-bottom: 20px;
+            padding: 10px;  /* Add some space inside the box */
+            border: 1px solid #ccc;  /* Gray border around each section */
+            border-radius: 5px;  /* Rounded corners for the box */
+            background-color: #f9f9f9;  /* Light background color for contrast */
+        }
+        .section h3 {
+            margin-bottom: 5px;
+        }
+        .section input, .section select {
+            width: 100%;
+            padding: 5px;
+            margin-top: 5px;
+        }
+        .hours {
+            font-style: italic;
+            font-weight: normal;
+        }
+        .textarea {
+          width:100%;
+          padding: 5px;
+          margin-top: 5px;
+          height:50px;
+          border:1px solid black;
+        }
+
+      </style>
+      <!-- Include jsPDF library from CDN -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.0/jspdf.umd.min.js"></script>
+
+</head>
+<body>
+
+<h1>Course Workload Estimator</h1>
+<h2> How to use this. </h2>
+<p>This is intended to help you to estimate approximate study hours for a course.
+<em>It is simply a ballpark estimate</em>, using research where it is available,
+   to help you to make a more informed judgment. In many cases we just leave you
+   to enter your own estimate.
+We will try to update it as we learn more.
+<p> Use this in conjunction with the course designer tool to help estimate study hours. You
+  don't need to enter all the data - just pick the bits you need. If you set the
+  course units to "1" then it will calculate just what you need for a particular
+  learning activity. There's no automation to link it with the course designer
+  tool - it is a very quick and dirty browser-only app with no links to any databases
+  or other applications.  Copy the figures you want into "duration"
+    for learning activities in the the course designer tool.
+</p>
+<p>Important: <strong>The form contents are not saved anywhere</strong>. This runs locally in your browser.
+  You may, though, click the "print summary (inline) button to get text to copy and paste, or the "print summary (PDF)"
+button to save the data to a PDF file.</p>
+
+<div class="section">
+    <h3>Course Info</h3>
+    <label for="courseName">Course name</label>
+    <input type="text" id="courseName" value="">
+    <label for="courseUnits">Number of units</label>
+    <input type="number" id="courseUnits" value="10">
+    <h3>Total Hours: <span id="totalHours" class="hours">0</span> hours</h3>
+    <h3>Per-unit Hours: <span id="perUnitHours" class="hours">0</span> hours/unit</h3>
+</div>
+
+<h2>Per unit estimates </h2>
+
+<div class="section" id="readingContainer">
+    <h3>Reading Assignments: <span id = "readingHours" class="hours"></span></h3>
+    <label for="perUnitPages">Average Pages Per Unit:</label>
+    <input type="number" id="perUnitPages" value="0">
+    <label for="readingDensity">Page Density:</label>
+    <select id="readingDensity">
+        <option value="450">450 Words (paperback)</option>
+        <option value="600">600 Words (monograph)</option>
+        <option value="750">750 Words (textbook)</option>
+    </select>
+    <label for="readingDifficulty">Difficulty:</label>
+    <select id="readingDifficulty">
+        <option value="1">No New Concepts</option>
+        <option value="1.5">Some New Concepts</option>
+        <option value="2">Many New Concepts</option>
+    </select>
+    <label for="readingPurpose">Purpose:</label>
+    <select id="readingPurpose">
+        <option value="300">Skim to get main ideas</option>
+        <option value="130">Understand/memorize</option>
+        <option value="70">Analyze/engage</option>
+    </select>
+    <p> Assumptions (research-based): 300 wpm for skimming, 130 wpm for understanding, 70 wpm for analysis </p>
+     <p><button type="button" onclick="addInstance('reading')">Add Another Reading Assignment</button></p>
+    <hr />
+</div>
+
+
+<div class="section">
+    <h3>Discussion Posts, reflective blogs, etc: <span id = "discussionHours" class="hours"></span></h3>
+    <label for="postsPerunit">Average Posts Per Unit:</label>
+    <input type="number" id="postsPerunit" value="0">
+    <label for="postType">Post Type:</label>
+    <select id="postType">
+        <option value="text">Text</option>
+        <option value="audioVideo">Audio/Video</option>
+    </select>
+    <label for="postLength">Length (Words/Minutes):</label>
+    <input type="number" id="postLength" value="250">
+    <p>Assumptions (research-based): this assumes no significant research is needed to post a message. Consider one of the
+      other categories or add to the "additional tasks" time if the discussion post, blog, etc demands significant additional work.
+</div>
+
+<div class="section">
+    <h3>Watching Video/Listening to Audio: <span id = "videoTime" class="hours"></span></h3>
+    <label for="perUnitVideos">Average Hours Per Unit:</label>
+    <input type="number" step="0.25" id="perUnitVideos" value="0">
+    <p>Assumptions(research-based): students on average spend double the length of a video
+      due to rewinding and reviewing </p>
+</div>
+
+<div class="section">
+    <h3>Exploration and inquiry  <span id = "searchHours" class="hours"></span></h3>
+    <label for="searchingHours">Average hours per unit spent searching, discovering,
+      collecting and reading information from digital or physical resources,
+      including AI:</label>
+    <input type="number" step="0.25" id="searchingHours" value="0">
+    <p>Assumptions: searching for a fact or known resource takes around 4 minutes
+      (about 0.07 of an hour, research-based).
+      Exploratory search -  for instance to find a solution to a problem -
+      will normally take significantly longer. No research - this one has to be a
+      judgment call. </p>
+</div>
+<div class="section">
+    <h3>Synchronous Meetings: <span id = "syncHours" class="hours"></span></h3>
+    <label for="realtimeHours">Average realtime meeting hours Per Unit:</label>
+    <input type="number" id="realtimeHours" value="0">
+    <p>Assumptions: the length of the meeting is the only time needed </p>
+</div>
+
+<div class="section">
+    <h3>Programming: <span id = "codingHours" class="hours"></span></h3>
+    <label for="perUnitcode">Average lines of code Per Unit:</label>
+    <input type="number" id="perUnitcode" value="0">
+    <label for="codingSkill">Coding skill:</label>
+    <select id="codingSkill">
+        <option value="5">Beginner</option>
+        <option value="7">Intermediate</option>
+        <option value="10">Advanced</option>
+    </select>
+    <p>Assumptions: based on expert programmer averaging 10 lines per hour. This
+    is highly variable depending on many different factors and there
+    is enormous variance in the research (as well as many who believe it
+    to be a meaningless measure of productivity)
+    but it appears to be a fairly common assumption. </p>
+</div>
+
+<div class="section">
+    <h3>Diagramming etc: <span id = "diagramHours" class="hours"></span></h3>
+    <label for="hoursDiag">Average hours per unit for diagrams, illustrations, graphs, etc (e.g. systems analysis, blueprints, etc)
+      that are not drawn as part of other assignments:</label>
+    <input type="number" id="hoursDiag" value="0">
+    <p>Assumptions: no known research. Make an estimate based on the kind of tasks and skills expected. </p>
+</div>
+
+<div class="section">
+    <h3>Calculation etc: <span id = "calcTime" class="hours"></span></h3>
+    <label for="hoursCalc">Average hours per unit performing calculations
+      that are not performed as parts of other assignments:</label>
+    <input type="number" id="hoursCalc" value="0" step = "0.5">
+    <p>Assumptions: no known research. Make an estimate based on the kind of tasks and skills expected. </p>
+</div>
+
+<div class="section">
+    <h3>Additional Tasks: <span id = "totalAdditionalUnitHours" class="hours"></span></h3>
+    <label for="additionalUnitHours">Additional Hours Per Unit for activities not already listed:</label>
+    <input type="number" id="additionalUnitHours" value="0">
+    <p> Use this for anything not covered elsewhere, or if you need a manual override
+    (negative values will work) </p>
+</div>
+
+<!-- per course stuff -->
+
+<h2>Per course estimates </h2>
+
+<div class="section">
+    <h3>Writing Assignments: : <span id = "writingTime" class="hours"></h3>
+    <label for="coursePages">Total words for all written assignments:</label>
+    <input type="number" id="coursePages" value="0">
+    <label for="writingDifficulty">Difficulty:</label>
+    <select id="writingDifficulty">
+        <option value="4">Easy (reflection, opinion, etc, minimal drafting)</option>
+        <option value="8">Moderate (report, description, explanation, etc, some drafting)</option>
+        <option value="20">Challenging (essay, analysis, synthesis, argument, etc, extensive drafting)</option>
+    </select>
+    <p> Assumptions (research-informed): 4 hours/1000 words for easy, 8 hours/1000 words for moderate, 20 hours/1000 words for challenging </p>
+</div>
+
+<div class="section">
+    <h3>Multimedia Assignments: <span id = "mmTime" class="hours"></h3>
+    <label for="mmLength">Length of content in minutes:</label>
+    <input type="number" id="mmLength" value="0">
+    <label for="mmComplexity">Production Complexity:</label>
+    <select id="mmComplexity">
+        <option value="5">Easy (e.g. using BrightSpace recording tools, minimal or no editing)</option>
+        <option value="30">Moderate (e.g. recorded PowerPoint presentation, some editing)</option>
+        <option value="120">Challenging (complex presentation, extensive editing)</option>
+    </select>
+    <label for="mmContent">Content Complexity:</label>
+    <select id="mmContent">
+        <option value="1">Easy (reflection, opinion, etc, minimal scripting)</option>
+        <option value="3">Moderate (report, summary presentation of existing work,
+          some scripting/notes)</option>
+        <option value="9">Challenging (primary research, scripted, content needing editing)</option>
+    </select>
+    <p> Assumptions:
+      For production complexity: Easy - 3 minutes per minute of content (assumes a couple of tries),
+      Moderate - 30 minutes per minute of content,
+    Challenging - 120 minutes per minute of content (based on minimum assumptions used in industry).
+    For content complexity, no research available - a hunch. Weightings are easy=1, moderate=3, challenging=9
+  </p>
+</div>
+
+
+
+
+<div class="section">
+    <h3>Labs: <span id = "labTime" class="hours"></span></h3>
+    <label for="labCount">Labs per Course:</label>
+    <input type="number" id="labCount" value="0">
+    <label for="labHours">Hours Per Lab:</label>
+    <input type="number" step="0.5" id="labHours" value="2">
+    <label for="reportHours">Hours Per lab report:</label>
+    <input type="number" step="1" id="reportHours" value="8">
+    <p> Assumptions: defaults based on Reddit comments for CHEM217 labs.
+      Don't forget to allow time for diagrams, tables,
+      graphs, etc.
+</div>
+
+
+
+<div class="section">
+    <h3>Objective Quizzes: <span id = "quizHours" class="hours"></span></h3>
+    <label for="quizzesPercourse">Quizzes set per course:</label>
+    <input type="number" id="quizzesPercourse" value="0">
+    <label for="questionsPerQuiz">Questions Per Quiz:</label>
+    <input type="number" id="questionsPerQuiz" value="0">
+    <label for="timePerQuestion">Time Per Question (Minutes):</label>
+    <input type="number" id="timePerQuestion" value="1">
+    <p>Assumptions: leave at the default of 1 minute per question
+      (research-based) for simple multiple choice
+      questions - increase the number for more complex question types (for Which
+      there is no known research) using your skill and judgment </p>
+</div>
+
+<div class="section">
+    <h3>Exams: <span id = "examTime" class="hours"></span></h3>
+    <label for="examsPercourse">Exams Per course:</label>
+    <input type="number" id="examsPercourse" value="0">
+    <label for="examDuration">Exam duration:</label>
+    <input type="number" id="examDuration" value="3">
+    <label for="examStudyHours">Study Hours Per Exam:</label>
+    <input type="number" id="examStudyHours" value="30">
+    <p>Assumptions (research-based): typically 25% of the overall study hours for a course (according to one paper)
+      or 25-30 hours per exam (according to others, and various anecdotal reports).
+      For a typical 3-credit course with one exam this works out about the same.</p>
+</div>
+
+<div class="section">
+    <h3>Portfolios etc: <span id = "portfolioHours" class="hours"></span></h3>
+    <label for="portfolios">Hours for portfolio assembly:</label>
+    <input type="number" id="portfolios" value="0">
+    <p>Assumptions: make an estimate based on the kind of tasks and skills expected.
+    No known research </p>
+</div>
+
+
+<div class="section">
+    <h3>Software/hardware installation and maintenance: <span id = "installHours" class="hours"></span></h3>
+    <label for="installTime">Hours for software/hardware installation and maintenance:</label>
+    <input type="number" id="installTime" value="0" step="0.25">
+    <p>Assumptions: make an estimate based on the kind of tasks and skills expected.
+    Includes things like signing up for cloud services, textbook readers, Diagramming
+    tools, compilers, servers, robots, etc. No known research </p>
+</div>
+
+
+<div class="section">
+    <h3>Additional Course Tasks: <span id = "addCourseHours" class="hours"></span></h3>
+    <label for="additionalCourseHours">Additional Hours Per Course for activities not already listed:</label>
+    <input type="number" id="additionalCourseHours" value="0">
+    <p> Use this for anything not covered elsewhere, or if you need a manual override
+    (negative values will work) </p>
+</div>
+
+<div class="section">
+    <h3>Notes and assumptions: <span id = "notes" class="hours"></span></h3>
+    <label for="notes">Use this to explain anything that needs explaining
+      for what you have entered on the form:</label>
+  <div class="textarea" id="notes" contenteditable>
+    <p> Use this to provide notes of explanation for anything that may not be
+    clear or obvious in the data you have entered on the form </p>
+  </div>
+</div>
+
+
+
+<!-- Button to generate summary -->
+<button id="printSummary">Print Summary (inline)</button>
+<button id="printPDFSummary">Print PDF Summary</button>
+
+<!-- Area to display the summary -->
+<div id="summaryOutput" style="margin-top: 20px; display: none;">
+    <h2>Summary</h2>
+    <pre id="summaryText"></pre>
+</div>
+
+
+<hr />
+
+<p>
+
+Inspired by https://cat.wfu.edu/resources/workload2/ and using some of the research from https://cat.wfu.edu/resources/workload/estimationdetails/.
+</p>
+
+<script>
+
+      // General function to add a new instance for any section
+      function addInstance(type) {
+        const container = document.getElementById(type + 'Container');
+        const newInstance = container.querySelector('.instance').cloneNode(true);
+        container.appendChild(newInstance);
+        attachListeners(newInstance);
+      }
+
+      // Attach event listeners to the new instance
+      function attachListeners(instance) {
+        instance.querySelectorAll('input, select').forEach(element => {
+            element.addEventListener('input', updateWorkload);
+        });
+      }
+
+    function updateWorkload() {
+        const courseUnits = parseFloat(document.getElementById('courseUnits').value) || 0;
+        const perUnitPages = parseFloat(document.getElementById('perUnitPages').value) || 0;
+        const readingDensity = parseFloat(document.getElementById('readingDensity').value) || 0;
+        const readingDifficulty = parseFloat(document.getElementById('readingDifficulty').value) || 0;
+        const readingPurpose = parseFloat(document.getElementById('readingPurpose').value) || 0;
+        const coursePages = parseFloat(document.getElementById('coursePages').value) || 0;
+        const writingDifficulty = parseFloat(document.getElementById('writingDifficulty').value) || 0;
+        const mmLength = parseFloat(document.getElementById('mmLength').value) || 0;
+        const mmComplexity = parseFloat(document.getElementById('mmComplexity').value) || 0;
+        const mmContent = parseFloat(document.getElementById('mmContent').value) || 0;
+        const postsPerunit = parseFloat(document.getElementById('postsPerunit').value) || 0;
+        const postType = document.getElementById('postType').value;
+        const postLength = parseFloat(document.getElementById('postLength').value) || 0;
+        const perUnitVideos = parseFloat(document.getElementById('perUnitVideos').value) || 0;
+        const examsPercourse = parseFloat(document.getElementById('examsPercourse').value) || 0;
+        const examStudyHours = parseFloat(document.getElementById('examStudyHours').value) || 0;
+        const examDuration = parseFloat(document.getElementById('examDuration').value) || 0;
+        const realtimeHours = parseFloat(document.getElementById('realtimeHours').value) || 0;
+        const additionalUnitHours = parseFloat(document.getElementById('additionalUnitHours').value) || 0;
+        const additionalCourseHours = parseFloat(document.getElementById('additionalCourseHours').value) || 0;
+        const searchingHours = parseFloat(document.getElementById('searchingHours').value) || 0;
+        const quizzesPercourse = parseFloat(document.getElementById('quizzesPercourse').value) || 0;
+        const questionsPerQuiz = parseFloat(document.getElementById('questionsPerQuiz').value) || 0;
+        const timePerQuestion = parseFloat(document.getElementById('timePerQuestion').value) || 0;
+        const codingSkill = parseFloat(document.getElementById('codingSkill').value) || 0;
+        const perUnitcode = parseFloat(document.getElementById('perUnitcode').value) || 0;
+        const labCount = parseFloat(document.getElementById('labCount').value) || 0;
+        const labTime = parseFloat(document.getElementById('labHours').value) || 0;
+        const reportHours = parseFloat(document.getElementById('reportHours').value) || 0;
+        const hoursDiag = parseFloat(document.getElementById('hoursDiag').value) || 0;
+        const portfolios = parseFloat(document.getElementById('portfolios').value) || 0;
+        const installTime = parseFloat(document.getElementById('installTime').value) || 0;
+        const hoursCalc = parseFloat(document.getElementById('hoursCalc').value) || 0 ;
+
+        // Estimate reading time per unit
+        let readingRate = readingPurpose;
+
+        const readingTime = perUnitPages*readingDensity*readingDifficulty / readingRate/60;
+
+        document.getElementById('readingHours').innerText = convHours(readingTime);
+
+        // Estimate writing time
+        const writingRate = writingDifficulty; // simple placeholder calculation
+        const writingTime = (coursePages/1000) * writingRate;
+
+        document.getElementById('writingTime').innerText = convHours(writingTime);
+
+        // Estimate multimedia time
+        const mmTime =  (mmLength * mmComplexity * mmContent) /60;
+
+        document.getElementById('mmTime').innerText = convHours(mmTime);
+
+        //Estimate coding time
+        const codingTime = perUnitcode/codingSkill;
+        document.getElementById('codingHours').innerText = convHours(codingTime);
+
+        //Estimate coding time
+        const calcTime = hoursCalc * courseUnits;
+        document.getElementById('calcTime').innerText = convHours(calcTime);
+
+
+        //Calculate video/audio hour
+
+        const videoTime = perUnitVideos*2*courseUnits;
+        document.getElementById('videoTime').innerText = convHours(videoTime);
+
+        //estimate diagram etc time
+        const diagramHours = hoursDiag * courseUnits;
+        document.getElementById('diagramHours').innerText = convHours(diagramHours);
+
+
+        //calculate lab time
+
+        const labHours = labCount * (labTime+reportHours);
+        document.getElementById('labTime').innerText = convHours(labHours);
+
+        // Estimate discussion time
+        let postTime = 0;
+        if (postType === 'text') {
+            postTime = (postLength/4/60) * postsPerunit * courseUnits; // simple text estimation
+        } else {
+            postTime = (postLength * 3/60) * postsPerunit; // audio/video estimation
+        }
+        document.getElementById('discussionHours').innerText = convHours(postTime);
+
+        // Estimate quiz time
+        const quizTime = (quizzesPercourse * questionsPerQuiz * timePerQuestion) /60;
+        document.getElementById('quizHours').innerText = convHours(quizTime);
+
+        // Estimate exam time
+        const examTime = (examStudyHours * examsPercourse)+(examDuration * examsPercourse);
+        document.getElementById('examTime').innerText = convHours(examTime);
+
+        //calculate additional task total/unit
+        const totalAdditionalUnitHours = additionalUnitHours * courseUnits;
+        document.getElementById('totalAdditionalUnitHours').innerText = convHours(totalAdditionalUnitHours);
+
+        //display additional task total/course
+        document.getElementById('addCourseHours').innerText = convHours(additionalCourseHours);
+
+
+        //display portfolio time
+        document.getElementById('portfolioHours').innerText = convHours(portfolios);
+
+        //display installation time
+        document.getElementById('installHours').innerText = convHours(installTime);
+
+        //search hours
+        const searchHours = searchingHours*courseUnits;
+        document.getElementById('searchHours').innerText = convHours(searchHours);
+
+        //sync hours
+        const syncHours = realtimeHours*courseUnits;
+        document.getElementById('syncHours').innerText = convHours(syncHours);
+
+        // Calculate total and perUnit hours
+        const totalHours = (readingTime + writingTime + postTime + portfolios + videoTime +
+         examTime  + quizTime + mmTime + searchHours + codingTime + syncHours + labHours +
+          videoTime + diagramHours + installTime + calcTime +
+          totalAdditionalUnitHours + additionalCourseHours);
+        const perUnitHours = totalHours / courseUnits;
+
+        document.getElementById('totalHours').innerText = convHours(totalHours);
+        document.getElementById('perUnitHours').innerText = convHours(perUnitHours);
+    }
+
+    // Attach event listeners to update estimates dynamically
+    document.querySelectorAll('input, select').forEach(element => {
+    element.addEventListener('input', updateWorkload);
+    });
+
+    //function to convert decimal hours to hours and Minutes
+    function convHours(decimalHours){
+        var decimalTime = parseFloat(decimalHours);
+        decimalTime = decimalTime * 60 * 60;
+        var hours = Math.floor((decimalTime / (60 * 60)));
+        decimalTime = decimalTime - (hours * 60 * 60);
+        var minutes = Math.floor((decimalTime / 60));
+        decimalTime = decimalTime - (minutes * 60);
+        var seconds = Math.round(decimalTime);
+        if(hours < 10)
+        {
+        	hours = "0" + hours;
+        }
+        if(minutes < 10)
+        {
+        	minutes = "0" + minutes;
+        }
+        return "Course total: " + hours + ":" + minutes;
+    }
+    // Function to generate and display the summary, including the notes
+  function generateSummary(pdf) {
+        const summaryLines = [];
+        const sections = document.querySelectorAll('.section');
+
+        sections.forEach(section => {
+            const header = section.querySelector('h3').childNodes[0].textContent;
+            const inputs = section.querySelectorAll('input, select');
+            const notesDiv = section.querySelector('.textarea');
+            const hoursSpan = section.querySelector('.hours');
+
+            if (hoursSpan.innerText.trim() != "Course total: 00:00"){
+              const values = Array.from(inputs)
+                  .map(input => {
+                      const label = section.querySelector(`label[for=${input.id}]`) ? section.querySelector(`label[for=${input.id}]`).innerText : '';
+                      const value = input.value.trim();
+                      if (value && value !== '0') { // Ignore empty or zero values
+                          return `${label}: ${value}`;
+                      }
+                      return null;
+                  })
+                  .filter(line => line !== null);
+
+              if (hoursSpan) {
+                  const hoursText = hoursSpan.innerText.trim();
+                  if (hoursText) {
+                      values.push(`${hoursText}`);
+                  }
+              }
+
+              if (notesDiv) {
+                  const notesText = notesDiv.innerText.trim();
+                  if (notesText && notesText !== "Use this to provide notes of explanation for anything that may not be clear or obvious in the data you have entered on the form") {
+                      values.push(`Notes: ${notesText}`);
+                  }
+              }
+
+              if (values.length > 0) {
+                  summaryLines.push(`${header}\n${values.join('\n')}`);
+              }
+            }
+          });
+
+
+          const summaryText = summaryLines.join('\n\n');
+          document.getElementById('summaryText').innerText = summaryText;
+          document.getElementById('summaryOutput').style.display = 'block';
+
+      if (pdf === "PDF"){
+        // Create PDF using jsPDF
+            const { jsPDF } = window.jspdf;
+            const doc = new jsPDF();
+            const margin = 10; // Margin size
+            const pageWidth = doc.internal.pageSize.getWidth();
+            const maxLineWidth = pageWidth - margin * 2;
+            const fontSize = 10; // Smaller font size
+
+            doc.setFontSize(fontSize);
+
+            // Split text into lines that fit within the page width
+            const lines = doc.splitTextToSize(summaryText, maxLineWidth);
+
+            // Add lines to the PDF, ensuring they don't overflow the page
+            let yPosition = margin;
+            lines.forEach(line => {
+                if (yPosition + fontSize / 2 > doc.internal.pageSize.getHeight() - margin) {
+                    doc.addPage(); // Add a new page if necessary
+                    yPosition = margin; // Reset y position for the new page
+                }
+                doc.text(line, margin, yPosition);
+                yPosition += fontSize / 2; // Increment y position for the next line
+            });
+
+            doc.save('summary.pdf');
+      }
+
+  }
+
+    // Attach event listener to the button
+    document.getElementById('printSummary').addEventListener('click', () => generateSummary(''));
+    document.getElementById('printPDFSummary').addEventListener('click', () => generateSummary('PDF'));
+
+    // Initial calculation on page load
+    updateWorkload();
+</script>
+
+</body>
+</html>
