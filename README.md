@@ -1,8 +1,7 @@
 # courseomatic
 A very simple web app to create and save storyboards for course designs, no server required
 
-Course-omatic is a design tool for creating
-      course designs.
+Course-omatic is a design tool for creating course designs.
       It provides an interface for creating storyboards showing all the
       units and activities on a course, as well as basic course
       information like goals, learning outcomes, and a description. You
@@ -14,9 +13,6 @@ Course-omatic is a design tool for creating
       should also be learning activities, so that's where you will find
       the means to manage them. 
 
-    
-
-
       It is designed to support a learning design process derived from ABC-LD (ABC
         Learning Design), adapted to the needs of self-paced online
       learning. ABC-LD is an agile approach to building courses that has
@@ -27,11 +23,7 @@ Course-omatic is a design tool for creating
       Miro, and it provides a lot more scaffolding and support for
       creating diagrams and the kind of information needed when writing
       a course.
-
-    
-
-    
-
+      
       This is a performance support system that is best used with
       friends! In order to make it possible to share this on any site,
       including in a learning management system, it does not need a
