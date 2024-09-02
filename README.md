@@ -12,8 +12,7 @@ Course-omatic is a design tool for creating course designs.
       underlying principles of good course design that all assessments
       should also be learning activities, so that's where you will find
       the means to manage them. 
-
-      It is designed to support a learning design process derived from ABC-LD (ABC
+It is designed to support a learning design process derived from ABC-LD (ABC
         Learning Design), adapted to the needs of self-paced online
       learning. ABC-LD is an agile approach to building courses that has
       been fully tried and tested in institutions and organizations
@@ -23,8 +22,7 @@ Course-omatic is a design tool for creating course designs.
       Miro, and it provides a lot more scaffolding and support for
       creating diagrams and the kind of information needed when writing
       a course.
-      
-      This is a performance support system that is best used with
+This is a performance support system that is best used with
       friends! In order to make it possible to share this on any site,
       including in a learning management system, it does not need a
       back-end server to run but, in order to achieve this, a few
@@ -39,4 +37,4 @@ Course-omatic is a design tool for creating course designs.
       think it is fun! If you find any bugs (there are some) or want any
       changes to the features or way that it works, contact me, Jon Dron.
 
-     No installation needed. To run it, simply unzip it and open index.html in a browser. 
+ No installation needed. To run it, simply unzip it and open index.html in a browser. 
