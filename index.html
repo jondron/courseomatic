@@ -36,21 +36,25 @@
 				</select>
 				<button id="save-load-menu">Save/Load Menu</button>
 				<button id="clear-course-data">Clear course</button>
-				<a href = "help.html" target="help">Getting started </a>
+				<span id="show-hide-key" class="shrink-children">Show/hide key</span>
+				<a href = "help.html" target="help" class = "help-button" title="Getting started"> ❔ </a>
 				<a href="studyhoursestimator.html" target="_blank" style="position:absolute;right:16px">Help estimating study hours</a>
+			
+				<div id="colour-key-container"></div>
+
 			</div>
 
-			<div id="color-key-container"></div>
   		</div>
 </div>
  
  <!-- Scrollable Content Section -->
  
  	<div id="scrollable-content">
-	   <div id="course-details-display"">
-			<div id="total-course-duration" style="font-size: 16px; font-weight: bold;">Total Course Duration: 0h 0m</div>
-			<div id="learning-outcomes-display"></div>
-			<div id="pie-chart">
+	   <div id="course-details-display">
+	   		<h3 class="shrink-children">Course details</h3>
+			<div id="total-course-duration" style="font-size: 16px; font-weight: bold;" class="collapsible">Total Course Duration: 0h 0m</div>
+			<div id="learning-outcomes-display"  class="collapsible"></div>
+			<div id="pie-chart"  class="collapsible">
 				<p>Relative time spent per activity type:</p>
 				<canvas id="activityPieChart" width="100" height="100"></canvas>
 			</div>
