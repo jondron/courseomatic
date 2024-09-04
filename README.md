@@ -13,11 +13,14 @@ Course-omatic is a design tool for creating course designs.
       should also be learning activities, so that's where you will find
       the means to manage them. 
       
-It is designed to support a learning design process derived from ABC-LD (ABC
-        Learning Design), adapted to the needs of self-paced online
+It is designed to support a learning design process derived from [ABC-LD (ABC
+        Learning Design)](https://abc-ld.org), adapted to the needs of self-paced online
       learning. ABC-LD is an agile approach to building courses that has
-      been fully tried and tested in institutions and organizations
-      globally. This tool only supports part of the process - the
+      been fully tried and tested in many institutions and organizations
+      globally but the activity types are a bit focused on paced approaches
+      to teaching, so this tool adds "reflection" and "cooperation" activity
+      types and focuses more on study hours than teaching schedules.
+      It only supports part of the process - the
       creation of storyboards - but it is a lot easier to use than
       commonly used general-purpose diagramming systems like JamBoard or
       Miro, and it provides a lot more scaffolding and support for
@@ -40,3 +43,4 @@ This is a performance support system that is best used with
       changes to the features or way that it works, contact me, Jon Dron.
 
  No installation needed. To run it, simply unzip it and open index.html in a browser. 
+ You can try it out using the [version hosted on GitHub Pages](https://jondron.github.io/courseomatic).
