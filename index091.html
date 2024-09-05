@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Course-omatic</title>
+    <link rel="stylesheet" href="styles091.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/7.1.1/d3.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script src="https://cdn.quilljs.com/1.3.6/quill.js"></script>
+    <link href="https://cdn.quilljs.com/1.3.6/quill.snow.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script defer src="script091.js"></script>
+</head>
+<body>
+    <div class="container">
+        <!-- Title and Course Designer Header -->
+        <header>
+            <h1>Course-omatic</h1>
+			<nav id="toolbar">
+				<a href="#" id="toggle-course-info" class="toggle-link">Toggle Course Info</a> |
+				<a href="#" id="toggle-activity-key" class="toggle-link">Toggle Activity Key</a>
+				<button id="edit-course-info">Edit Course Info</button>
+				<button id="create-new-unit">New Unit</button>
+				<select id="learning-activity-menu">
+					<option value="">Add Learning Activity</option>
+					<option value="acquisition">Acquisition</option>
+					<option value="practice">Practice</option>
+					<option value="investigation">Investigation</option>
+					<option value="reflection">Reflection</option>
+					<option value="production">Production</option>
+					<option value="discussion">Discussion</option>
+					<option value="cooperation">Cooperation</option>
+					<option value="collaboration">Collaboration</option>
+				</select>
+				<button id="save-load-menu">Save/Load</button>
+			</nav>
+
+        </header>
+
+    <!-- Main Container -->
+    <div id="container">
+
+			        <!-- Activity Key Section -->
+        <div id="activity-key" class="collapsible-section" style="display: none;">
+            <h2>Activity Type Key</h2>
+            <div id="colour-key-container"></div>
+        </div>
+        
+        <!-- Course Information Section -->
+        <div id="course-info" class="collapsible-section" style="display: block;">
+            <h2>Course Information</h2>
+            <p><strong>Course Name:</strong> <span id="course-name-display"></span></p>
+            <p><strong>Course Description:</strong> <span id="course-description-display"></span></p>
+            <p><strong>Total Study Hours:</strong> <span id="total-course-duration"></span></p>
+            <div id="learning-outcomes-display"></div>
+        </div>
+
+
+        <!-- Course Units -->
+        <div id="course-container">
+            <!-- This is where course units will dynamically be rendered -->
+        </div>
+
+        <!-- Popup Modal for Editing or Creating Units/Activities -->
+        <div id="popup" class="popup" style="display:none;">
+            <!-- Popup content for editing/creating activities or units will appear here -->
+        </div>
+    </div>
+
+    <!-- Save/Load Popup -->
+    <div id="save-load-popup" class="popup" style="display: none;">
+        <div class="popup-content">
+            <h2>Save / Load Course</h2>
+            <button id="save-course">Save Course</button>
+            <button id="load-course">Load Course</button>
+            <input type="file" id="load-course-file" style="display:none;">
+            <button id="export-html">Export to HTML</button>
+            <button id="export-pdf">Export to PDF</button>
+            <button id="copy-clipboard">Copy to Clipboard</button>
+            <button id="close-popup">Close</button>
+        </div>
+    </div>
+
+</body>
+</html>

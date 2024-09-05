@@ -92,7 +92,7 @@ $(document).ready(function () {
             }
         }).disableSelection();
     }
-    
+
     // Initialize Quill editors
     let quillEditors = {};
 
@@ -119,7 +119,7 @@ $(document).ready(function () {
             quillEditors[editorId] = initializeQuillEditor('#' + editorId);
         });
     }
-    
+
 
 // MENU LISTENERS
     $('#edit-course-info').on('click', function () {
@@ -170,15 +170,15 @@ $(document).ready(function () {
         renderPieChart();
         closePopup();
     });
-    
+
     // Event listener for saving course to HTML
 	$(document).on('click', '#save-html', function () {
 		// console.log('Save to HTML button clicked'); // Logging for debugging
 		saveCourseToHTML(); // The function to save the course as HTML
 	})
-	
 
-//handle buttons on activity cards   
+
+//handle buttons on activity cards
     function addActivityCardListeners() {
 
 		// get the right card for editing
@@ -217,7 +217,7 @@ $(document).ready(function () {
 				calculateDurations(); // Update durations after deleting the activity
 			}
 		});
-		
+
 			 // Move left button listener
 		$('.move-left').off('click').on('click', function (e) {
 			e.stopPropagation();
@@ -258,7 +258,7 @@ $(document).ready(function () {
 			});
 	    }
 
-    
+
 // EDIT UNIT
 
    function editUnit(unitIndex) {
@@ -277,7 +277,7 @@ $(document).ready(function () {
 		var quill = new Quill('#edit-unit-description-editor', {
 			theme: 'snow' // You can choose 'bubble' or 'snow'
 		});
-	
+
 		// Set the existing description content into the Quill editor
 		quill.root.innerHTML = unit.description;
 
@@ -298,7 +298,7 @@ $(document).ready(function () {
 			closePopup();
 		});
 	}
-    
+
 
 //NEW UNIT
 
@@ -334,7 +334,7 @@ $(document).ready(function () {
 			closePopup();
 		});
 	}
-	
+
 	 function createNewUnit(title, description) {
 		let newUnit = {
 			title: title,
@@ -347,7 +347,7 @@ $(document).ready(function () {
 		addActivityCardListeners(); // Add event listeners for activity cards
 		calculateDurations(); // Calculate durations after adding a new unit
 	}
-	
+
 
 // EDIT COURSE INFO
 
@@ -366,16 +366,16 @@ $(document).ready(function () {
                 <button class="close-popup">Cancel</button>
             </div>
         `).addClass('active');
-       
+
         $('#course-name').val(courseData.name);
         $('#course-credit-hours').val(courseData.creditHours);
         $('#course-goal').val(courseData.goal);
         $('#course-description').val(courseData.description);
-      
+
         initializeQuillEditors();
         quillEditors['course-description-editor'].root.innerHTML = courseData.description;
 
-      
+
         updateLearningOutcomesUI();
 
         $('#add-learning-outcome').on('click', function () {
@@ -410,7 +410,7 @@ $(document).ready(function () {
 		const courseCreditHours = courseData.creditHours || "";
 		const learningOutcomes = courseData.learningOutcomes || [];
 		// Calculate total duration of the course
-	    let totalCourseMinutes = 0; // Initialize total minutes counter	
+	    let totalCourseMinutes = 0; // Initialize total minutes counter
 		courseData.units.forEach(unit => {
 			unit.activities.forEach(activity => {
 				if (activity.duration && activity.duration !== "N/A") {
@@ -435,7 +435,7 @@ $(document).ready(function () {
 			});
 			outcomesListHtml += '</ul>';
 		} */
-		
+
 		// Get unassessed learning outcomes
 		let unassessedOutcomes = getUnassessedLearningOutcomes();
 		if (unassessedOutcomes){
@@ -448,7 +448,7 @@ $(document).ready(function () {
 		} else {
 			outcomesListHtml = 'none';
 		}
-		
+
 		// Create a numbered list of learning outcomes
 		let outcomesHtml = '<ol id="learning-outcomes-list">';
 		learningOutcomes.forEach(outcome => {
@@ -456,8 +456,8 @@ $(document).ready(function () {
 		});
 		outcomesHtml += '</ol>';
 
-		
-		
+
+
 		// add info on specific activities
 		let specificActivityDetails = "";
 		courseData.units.forEach((unit, unitIndex) => {
@@ -468,9 +468,9 @@ $(document).ready(function () {
 			});
         specificActivityDetails += `</ul>`;
 	    });
-			
+
 		//now count them
-		
+
 		// Create an object to store counts of each specific activity type
 		const activityTypeCounts = {};
 
@@ -492,20 +492,20 @@ $(document).ready(function () {
 			activityTypeSummaryHtml += `<li>${type}: ${count}</li>`;
 		}
 		activityTypeSummaryHtml += '</ul>';
-	
-			
-		// note: any divs will get shrunk. Use other elements to make details persist when shrunk 		
+
+
+		// note: any divs will get shrunk. Use other elements to make details persist when shrunk
 		const courseDetails=`
 			<h3 class="shrink-children">${courseName} <span style = "font-size:small">(click to expand/shrink course information)</span></h3>
 			<div id="basic-info">
 				<div id="details">
 					<p><strong>Credits:</strong> ${courseCreditHours} </p>
-					<p><strong>Goal:</strong> ${courseGoal}</p> 
+					<p><strong>Goal:</strong> ${courseGoal}</p>
 					<p><strong>Description:</strong> ${courseDescription} </p>
 				</div>
 				<p id='learning-outcomes-display'><strong>Course learning outcomes: </strong> ${outcomesHtml}</div>
 			</div>
-			<p id='total-course-duration'> 
+			<p id='total-course-duration'>
 					<strong>Total Course Study Hours:</strong> ${totalDurationText}
 			</p>
 				<span id="pie-chart">
@@ -514,7 +514,7 @@ $(document).ready(function () {
 
 			<div id='useful-stats'>
 				<h3> Content info: </h3>
-				<div>	
+				<div>
 					<strong>Learning outcomes not yet assessed:</strong><br />
 					${outcomesListHtml}
 
@@ -530,7 +530,7 @@ $(document).ready(function () {
 					${activityTypeSummaryHtml}
 					<p><strong>Specific activities per unit:</strong> </>>
 					${specificActivityDetails}
-				</div>	
+				</div>
 
 			</div>
 		`;
@@ -541,11 +541,11 @@ $(document).ready(function () {
 // 						<canvas id="activityPieChart" width="250" height="250"></canvas>
 // 					</div>
 // 				</div>
-// 
+//
 // 		// Update the course name display
 		// $('#course-name-display').text(courseName);
 		$('#course-details-display').html(courseDetails);
-	
+
 // 		// Add click event listener to all elements with class 'shrink-children'
 // 		// this is used to make the course info compact
 // 		document.querySelectorAll('.shrink-children').forEach(header => {
@@ -588,9 +588,14 @@ $(document).ready(function () {
 	});
 
 //EDIT ACTIVITY
-	
+
     function editActivity(unitIndex, activityIndex) {
-        const activity = courseData.units[unitIndex].activities[activityIndex];
+     const activity = courseData.units[unitIndex].activities[activityIndex];
+		// const activity = findActivityById(unitIndex, activityIndex);
+			if (!activity) {
+				console.error('Error: Activity not found');
+				return;
+			}
              $('#popup').html(`
             <div style="padding: 20px;">
                 <label>Activity Title: <input type="text" id="edit-activity-title" value="${activity.title}" style="width: 90%;"></label><br><br>
@@ -609,7 +614,7 @@ $(document).ready(function () {
 					<label>Pass Mark (%): <input type="number" id="edit-activity-pass-mark" value="${activity.passMark || ''}" min="0" max="100" style="width: 90%;"></label><br><br>
 					<label>Weighting (%): <input type="number" id="edit-activity-weighting" value="${activity.weighting || ''}" min="0" max="100" style="width: 90%;"></label><br><br>
 					<label>Marking Hours: <input type="number" step="0.1" id="edit-activity-marking-hours" value="${activity.markingHours || ''}" min="0" step="0.1" style="width: 90%;"></label><br><br>
-				</div>  
+				</div>
                 <label>Learning Outcomes:</label><br>
                 <div style="max-height: 150px; overflow-y: auto;">
                     ${courseData.learningOutcomes.map((outcome, index) => `
@@ -654,10 +659,10 @@ $(document).ready(function () {
             closePopup();
         });
     }
-    
+
 
 // NEW ACTIVITY
-	
+
 	function showNewLearningActivityPopup(type) {
 		if (!checkUnitsExist()) {
 			alert("You must create at least one unit before you can add an activity. Sorry for the inconvenience. I'll open the 'create unit' form for you.");
@@ -773,11 +778,12 @@ $(document).ready(function () {
 			weighting: weighting,
 			markingHours: markingHours
 		};
-	
+
 		if (courseData.units[unitIndex]) { // Safeguard to avoid undefined references
 			courseData.units[unitIndex].activities.push(newActivity);
+	        reindexActivities(unitIndex); // Reindex after adding new activity
 		}
-	
+
 		renderUnits(); // Re-render the UI
 		saveCourseToLocalStorage(); // Ensure data is saved to local storage
 		initializeActivitySortable(); // Re-initialize sortable to update UI
@@ -847,10 +853,10 @@ $(document).ready(function () {
             closePopup();
         });
     }
-    
-    
+
+
  //SHOW ACTIVITY CHART
-    
+
 	let activityChartInstance; // Variable to hold the chart instance
 
 	// Function to display a pie chart of activity types
@@ -860,7 +866,7 @@ $(document).ready(function () {
 		// Initialize data structures
 		let activityCounts = {};
 		let activityDurations = {};
-  	
+
 		// Initialize counts and durations for each type
 		for (let type in activityColours) {
 			activityCounts[type] = 0;
@@ -983,7 +989,7 @@ $(document).ready(function () {
 	}
 
 
-	
+
 	function generatePieChartSVG(data, chartType) {
 		const diameter = 400; // Diameter of the SVG pie chart
 		const radius = diameter / 2;
@@ -1233,7 +1239,7 @@ $(document).ready(function () {
 
 // MAKE AN HTML REPORT
 
-    
+
 	function saveCourseToHTML() {
 		let htmlContent = `<!DOCTYPE html>
 			<html lang="en">
@@ -1241,7 +1247,7 @@ $(document).ready(function () {
 			   <title>Course-omatic output for ${courseData.name}</title>
 			 </head>
 			<body>
-	
+
 			<h1>${courseData.name}</h1>
 			<p><strong>Credit Hours:</strong> ${courseData.creditHours}</p>
 			<p><strong>Course Goal:</strong> ${courseData.goal}</p>
@@ -1323,7 +1329,7 @@ $(document).ready(function () {
 					</li>
 				`).join('')}
 			</ul>
-			
+
 			<h3>Unassessed Outcomes</h3>
 		`;
 
@@ -1332,7 +1338,7 @@ $(document).ready(function () {
 		} else {
 			htmlContent += '<p>All outcomes assessed</p>';
 		}
-		
+
 		//add the pie chart
 
 	    const proportionalData = preparePieChartData('proportional');
@@ -1345,18 +1351,18 @@ $(document).ready(function () {
     					<div id="svg-container" style="width: 100%; max-width: 600px; height: auto; overflow: visible;">
     						${proportionalSVG}
     					</div>
-    					
+
     					`;
     	htmlContent += colourKey;
- 
-    	
+
+
     	htmlContent += `
     					<div> End of report </div>
-    	
+
     					</body>
     					</html>
     	`;
-  
+
 
 		// Save the HTML content
 		let blob = new Blob([htmlContent], { type: "text/html" });
@@ -1393,33 +1399,48 @@ $(document).ready(function () {
             renderUnits();
         }
     }
-    
-    // Function to handle deleting an activity
-	function deleteActivity(unitIndex, activityIndex) {
-		// Check if the provided indices are valid
-		if (courseData.units[unitIndex] && courseData.units[unitIndex].activities[activityIndex]) {
-			if (confirm('Are you sure you want to delete this activity?')) {
-				// Remove the activity from the courseData
-				courseData.units[unitIndex].activities.splice(activityIndex, 1);
 
-				// Re-render the units to reflect changes
-				renderUnits();
-
-				// Save changes to local storage
-				saveCourseToLocalStorage();
-
-				// Recalculate total durations
-				calculateDurations();
-			}
-		} else {
-			console.error('Error: Invalid unit or activity index for deletion.');
-		}
+ 	// an attempt to fix failed update after moving
+	function updateActivityOrderAfterMove() {
+		courseData.units.forEach((unit, unitIndex) => {
+			const updatedActivities = [];
+			$(`.unit-panel[data-index=${unitIndex}] .activity-card`).each(function () {
+				const activityId = $(this).data('activity-id');
+				const activity = findActivityById(unitIndex, activityId);
+				if (activity) {
+					updatedActivities.push(activity);
+				}
+			});
+			courseData.units[unitIndex].activities = updatedActivities;
+		});
 	}
+
+
+    // Function to handle deleting an activity
+    function deleteActivity(unitIndex, activityIndex) {
+        if (confirm('Are you sure you want to delete this activity?')) {
+            const unit = courseData.units[unitIndex];
+        //    const activityIndex = unit.activities.findIndex(a => a.id === activityId);
+		    const activity = courseData.units[unitIndex].activities[activityIndex];
+
+            if (activityIndex > -1) {
+                unit.activities.splice(activityIndex, 1);
+                renderUnits();
+                saveCourseToLocalStorage();
+                initializeActivitySortable();
+                addActivityCardListeners();
+                calculateDurations();
+            }
+        }
+    }
+
 
 	// Function to clone an activity
 	function cloneActivity(unitIndex, activityIndex) {
 		// Check if the provided indices are valid
-		if (courseData.units[unitIndex] && courseData.units[unitIndex].activities[activityIndex]) {
+		//if (courseData.units[unitIndex] && courseData.units[unitIndex].activities[activityIndex]) {
+ 	    const activity = courseData.units[unitIndex].activities[activityIndex];
+		if (activity){
 			let activityToClone = courseData.units[unitIndex].activities[activityIndex];
 
 			// Create a deep copy of the activity to clone
@@ -1465,10 +1486,10 @@ $(document).ready(function () {
 				}
 			});
 		});
-		
+
 		//optionally return list of assessed outcomes
 		if (yn){
-		
+
 			return assessedOutcomes;
 		}
 		// Create a list of unassessed outcomes by filtering course learning outcomes
@@ -1512,6 +1533,36 @@ $(document).ready(function () {
 		return text;
 	}
 
+	// Function to update the data structure after moving an activity
+	function moveActivity(oldUnitIndex, activityIndex, newUnitIndex, newPosition) {
+		// Get the activity object
+		const activity = courseData.units[oldUnitIndex].activities[activityIndex];
+
+		// Remove it from the old unit
+		courseData.units[oldUnitIndex].activities.splice(activityIndex, 1);
+
+		// Add it to the new unit at the specified position
+		courseData.units[newUnitIndex].activities.splice(newPosition, 0, activity);
+
+		// Re-index activities in both units
+		reindexActivities(oldUnitIndex);
+		reindexActivities(newUnitIndex);
+
+		// Re-render units to reflect changes
+		renderUnits();
+		saveCourseToLocalStorage();
+	}
+
+
+	// Function to re-index activities
+	function reindexActivities(unitIndex) {
+		courseData.units[unitIndex].activities.forEach((activity, activityIndex) => {
+			activity.index = activityIndex; // Update index in the data model
+			$(`.unit-panel[data-index='${unitIndex}'] .activity-card[data-activity-id='${activity.id}']`).data('index', activityIndex); // Update index in DOM
+		});
+	}
+
+
 	function renderActivityCard(activity, activityIndex, unitIndex) {
 		let color = activityColours[activity.type] || 'gray';
 		const outcomeNumbers = activity.outcomes.map(i => i + 1).join('; '); // Use semicolon to separate
@@ -1553,11 +1604,11 @@ $(document).ready(function () {
 		}
 		return 0;
 	}
-	
+
 	function renderPieChart(){
-	
+
 			// draw proportions of activity types
-		
+
 		// ordinalView = displayActivityTypePieChart('ordinal');
 		displayActivityTypePieChart('proportional');
 
@@ -1586,7 +1637,7 @@ $(document).ready(function () {
                 <div class="activities-container" data-unit-index="${unitIndex}"></div>
             </div>
         `);
-		
+
      // Calculate total duration for the unit
         let totalUnitMinutes = 0;
 
@@ -1601,15 +1652,20 @@ $(document).ready(function () {
 
         $('#course-container').append(unitPanel);
     });
-
-        initializeActivitySortable();
+		// Check if course information should be displayed or not
+// 		if (isCourseInfoVisible) {
+// 			document.getElementById('course-info').style.display = 'block';
+// 		} else {
+// 			document.getElementById('course-info').style.display = 'none';
+// 		}
+		initializeActivitySortable();
         addActivityCardListeners();
         calculateDurations();
         updateCourseHeader();
         renderPieChart();
         addUnitPanelListeners();
     }
-    
+
     // Function to handle deleting a unit
 	function deleteUnit(unitIndex) {
 		// Show a confirmation dialog
@@ -1627,6 +1683,17 @@ $(document).ready(function () {
 		}
 	}
 
+	let isCourseInfoVisible = true;
+
+	function toggleCourseInfoVisibility() {
+		const courseInfoElement = document.getElementById('course-info');
+		if (isCourseInfoVisible) {
+			courseInfoElement.style.display = 'none';
+		} else {
+			courseInfoElement.style.display = 'block';
+		}
+		isCourseInfoVisible = !isCourseInfoVisible;
+	}
 
 	 // Function to move an activity card using the left and right buttons
 	function moveActivityCardWithButton(activityCard, direction) {
@@ -1672,6 +1739,18 @@ $(document).ready(function () {
 		}
 		saveCourseToLocalStorage(); // Save the updated state
 		calculateDurations(); // Update durations after moving activities
+	}
+
+	//	do after updating the dom
+	function reinitializeInteractivity() {
+		initializeActivitySortable(); // Reinitialize sortable for activities
+		addActivityCardListeners();   // Reattach event listeners for activity actions
+	}
+
+	// for use after an activity is moved
+	function synchronizeDataWithDOM() {
+		updateActivityOrderAfterMove();
+		saveCourseToLocalStorage();
 	}
 
     function calculateDurations() {
@@ -1757,14 +1836,14 @@ $(document).ready(function () {
     function closePopup() {
         $('#popup').removeClass('active').empty();
     }
-    
+
 
 
 
     function checkUnitsExist() {
         return courseData.units.length > 0;
     }
-    
+
     //delete course
     function clearCourseData() {
         if (confirm('Are you sure you want to clear all course data? This action cannot be undone.')) {
@@ -1781,7 +1860,7 @@ $(document).ready(function () {
             saveCourseToLocalStorage();
         }
     }
-    
+
 
     function updateLearningOutcomesUI() {
         $('#learning-outcomes-container').empty();
@@ -1814,7 +1893,7 @@ $(document).ready(function () {
             courseData.learningOutcomes.push($(this).val());
         });
     }
-	
+
 	//get course data from the DOM
     function updateCourseDataFromDOM() {
         courseData.units.forEach((unit, unitIndex) => {
@@ -1827,6 +1906,7 @@ $(document).ready(function () {
                 }
             });
             courseData.units[unitIndex].activities = activities;
+            reindexActivities(unitIndex); // Ensure activities are re-indexed
         });
     }
 
@@ -1835,7 +1915,7 @@ $(document).ready(function () {
  	   //console.log("Saving courseData to localStorage:", courseData);
         localStorage.setItem('courseData', JSON.stringify(courseData));
         // console.log ('saved: '+JSON.stringify(courseData))
-        
+
     }
 	//retrieve auto saved course
     function loadCourseFromLocalStorage() {
@@ -1851,8 +1931,8 @@ $(document).ready(function () {
             calculateDurations();
         }
     }
-    
-    
+
+
 
   	initializeQuillEditors();
     initializeColourKey();
@@ -1868,4 +1948,3 @@ $(document).ready(function () {
 
   /*  $('body').prepend('<div id="total-course-duration" style="font-size: 16px; font-weight: bold;">Total Study Hours: 0h 0m</div>'); */
 });
-

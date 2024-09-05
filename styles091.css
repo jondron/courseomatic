@@ -1,0 +1,306 @@
+/* General Styles */
+body, html {
+    margin: 0;
+    padding: 0;
+    font-family: Arial, sans-serif;
+    background-color: #f9f9f9;
+    color: #333;
+}
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+/* Header Styles */
+header {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+h1 {
+    font-size: 32px;
+    margin-bottom: 10px;
+}
+
+#course-details-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+#course-name-display {
+    font-size: 24px;
+    font-weight: bold;
+    margin: 0;
+}
+
+#total-course-duration {
+    font-size: 16px;
+    font-weight: bold;
+}
+
+/* Toggle Button Styles */
+.toggle {
+    cursor: pointer;
+    color: blue;
+    text-decoration: underline;
+}
+
+.toggle:hover {
+    color: darkblue;
+}
+
+/* Course Info Section */
+#course-info {
+    background-color: #f0f0f0;
+    padding: 20px;
+    border: 1px solid #ddd;
+    margin-bottom: 20px;
+}
+
+#course-info p {
+    margin: 10px 0;
+}
+
+#course-details-display {
+    font-size: 16px;
+}
+
+/* Toolbar Styles */
+nav#toolbar {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 20px;
+}
+
+nav#toolbar button, 
+nav#toolbar select {
+    padding: 10px;
+    font-size: 16px;
+    cursor: pointer;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    margin-right: 10px;
+    transition: background-color 0.3s ease;
+}
+
+nav#toolbar button:hover, 
+nav#toolbar select:hover {
+    background-color: #0056b3;
+}
+
+select#learning-activity-menu {
+    background-color: #f8f9fa;
+    color: #333;
+    border: 1px solid #ddd;
+    padding: 10px;
+    font-size: 16px;
+    border-radius: 5px;
+}
+
+/* Course Container */
+#course-container {
+    margin-bottom: 30px;
+}
+
+/* Unit Panel Styles */
+.unit-panel {
+    background-color: #e0e0e0;
+    padding: 15px;
+    margin-bottom: 20px;
+    border-radius: 8px;
+    border: 1px solid #ccc;
+    position: relative;
+}
+
+.unit-title {
+    font-size: 18px;
+    font-weight: bold;
+    cursor: move;
+}
+
+.unit-buttons {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+}
+
+.unit-buttons button {
+    background: none;
+    border: none;
+    cursor: pointer;
+    margin-right: 5px;
+    font-size: 18px;
+}
+
+.unit-buttons button:hover {
+    color: red;
+}
+
+/* Activity Card Styles */
+.activity-card {
+    background-color: #fff;
+    border-radius: 5px;
+    padding: 15px;
+    margin-bottom: 15px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    position: relative;
+}
+
+.activity-buttons {
+    position: absolute;
+    bottom: 10px;
+    right: 10px;
+}
+
+.activity-buttons button {
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-size: 16px;
+    margin-left: 5px;
+}
+
+.activity-buttons button:hover {
+    color: #007bff;
+}
+
+.activity-buttons button.delete-activity:hover {
+    color: red;
+}
+
+.activity-buttons button.clone-activity:hover {
+    color: green;
+}
+
+/* Popup Styles */
+.popup {
+    display: none;
+    position: fixed;
+    top: 20%;
+    left: 50%;
+    transform: translate(-50%, -20%);
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+    z-index: 1000;
+    max-width: 600px;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.popup.active {
+    display: block;
+}
+
+.popup h3 {
+    margin-top: 0;
+}
+
+.popup label {
+    display: block;
+    margin-bottom: 5px;
+}
+
+.popup input[type="text"], 
+.popup textarea, 
+.popup select {
+    width: calc(100% - 20px);
+    padding: 10px;
+    margin-bottom: 10px;
+    font-size: 16px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+}
+
+.popup button {
+    padding: 10px;
+    font-size: 16px;
+    cursor: pointer;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    transition: background-color 0.3s ease;
+}
+
+.popup button:hover {
+    background-color: #0056b3;
+}
+
+.popup button.close-popup {
+    background-color: #f44336;
+    margin-left: 10px;
+}
+
+.popup button.close-popup:hover {
+    background-color: #d32f2f;
+}
+
+/* Activity Type Key */
+#colour-key-container {
+    display: flex;
+    justify-content: space-around;
+    padding: 10px 0;
+    background-color: #f5f5f5;
+    margin-bottom: 10px;
+}
+
+#colour-key-container div {
+    flex: 1;
+    text-align: center;
+}
+
+#colour-key-container span {
+    display: inline-block;
+    width: 20px;
+    height: 20px;
+    margin-right: 5px;
+    vertical-align: middle;
+}
+
+#colour-key-container div span {
+    display: inline-block;
+}
+
+/* Save/Load Popup */
+#save-load-popup {
+    display: none;
+    position: fixed;
+    top: 20%;
+    left: 50%;
+    transform: translate(-50%, -20%);
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+    z-index: 1000;
+    max-width: 400px;
+    width: 100%;
+}
+
+#save-load-popup.active {
+    display: block;
+}
+
+#save-load-popup button {
+    width: 100%;
+    margin-bottom: 10px;
+    padding: 10px;
+    font-size: 16px;
+    cursor: pointer;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    transition: background-color 0.3s ease;
+}
+
+#save-load-popup button:hover {
+    background-color: #0056b3;
+}
